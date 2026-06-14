@@ -77,6 +77,7 @@ function DetailContent({ data, type }) {
               <div className="award-item__body">
                 <span className="award-item__name">{it.name}</span>
                 <span className="award-item__year">{it.year}</span>
+                {it.note && <span className="award-item__note">{it.note}</span>}
               </div>
               <span className="award-item__award">{it.award}</span>
             </li>
