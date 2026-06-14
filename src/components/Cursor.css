@@ -1,0 +1,62 @@
+/* 自定义金色光标 —— 仅在精确指针设备显示 */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+/* 实心金色小圆点（即时跟随） */
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  transition: opacity 0.3s ease;
+}
+
+/* 外围光环（阻尼跟随） */
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--accent-rgb), 0.55);
+  transition:
+    opacity 0.3s ease,
+    width 0.28s var(--ease),
+    height 0.28s var(--ease),
+    background 0.28s var(--ease),
+    border-color 0.28s var(--ease);
+}
+/* 悬停可点击元素：光环放大并泛起淡金背景 */
+.cursor-ring.is-active {
+  width: 52px;
+  height: 52px;
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: rgba(var(--accent-rgb), 0.8);
+}
+/* 按下：轻微收缩 */
+.cursor-ring.is-down {
+  width: 26px;
+  height: 26px;
+  background: rgba(var(--accent-rgb), 0.18);
+}
+
+/* 启用自定义光标后隐藏系统光标 */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* 无鼠标 / 减少动态偏好时不显示 */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
