@@ -10,10 +10,9 @@
 .modal__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(6, 5, 4, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  animation: modal-fade 0.3s var(--ease-out);
+  background: rgba(6, 5, 4, 0.86);
+  animation: modal-fade 0.25s var(--ease-out);
+  will-change: opacity;
 }
 
 .modal__panel {
@@ -29,7 +28,9 @@
     0 40px 120px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(var(--accent-rgb), 0.04);
   overflow: hidden;
-  animation: modal-rise 0.42s var(--ease-out);
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  animation: modal-rise 0.34s var(--ease-out);
 }
 /* 顶部香槟色细光 */
 .modal__panel::before {
@@ -95,8 +96,8 @@
   to { opacity: 1; }
 }
 @keyframes modal-rise {
-  from { opacity: 0; transform: translateY(24px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 600px) {
