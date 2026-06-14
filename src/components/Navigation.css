@@ -120,6 +120,102 @@
   50% { opacity: 0.35; }
 }
 
+/* —— 汉堡按钮（默认隐藏，移动端显示） —— */
+.nav__burger {
+  display: none;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  z-index: 110;
+}
+.nav__burger span {
+  position: absolute;
+  left: 50%;
+  width: 18px;
+  height: 1.6px;
+  background: var(--text-0);
+  border-radius: 2px;
+  transition: transform 0.35s var(--ease), opacity 0.25s var(--ease);
+}
+.nav__burger span:nth-child(1) { transform: translate(-50%, -6px); }
+.nav__burger span:nth-child(2) { transform: translate(-50%, 0); }
+.nav__burger span:nth-child(3) { transform: translate(-50%, 6px); }
+.nav--menu-open .nav__burger span:nth-child(1) { transform: translate(-50%, 0) rotate(45deg); }
+.nav--menu-open .nav__burger span:nth-child(2) { opacity: 0; }
+.nav--menu-open .nav__burger span:nth-child(3) { transform: translate(-50%, 0) rotate(-45deg); }
+
+/* —— 移动端全屏菜单 —— */
+.nav__mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 32px;
+  background: rgba(8, 7, 6, 0.97);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
+}
+.nav--menu-open .nav__mobile {
+  opacity: 1;
+  visibility: visible;
+}
+.nav__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nav__mobile-link {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 9vw, 48px);
+  color: var(--text-2);
+  padding: 10px 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: color 0.3s var(--ease);
+}
+.nav--menu-open .nav__mobile-link {
+  animation: nav-link-in 0.5s var(--ease-out) forwards;
+  animation-delay: calc(0.1s + var(--i) * 0.07s);
+}
+.nav__mobile-link.is-active {
+  color: var(--text-0);
+}
+.nav__mobile-idx {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--accent);
+}
+.nav__mobile-cta {
+  margin-top: 48px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease) 0.5s;
+}
+.nav--menu-open .nav__mobile-cta {
+  opacity: 1;
+}
+@keyframes nav-link-in {
+  to { opacity: 1; transform: none; }
+}
+
 @media (max-width: 980px) {
   .nav__links { display: none; }
+  .nav__cta { display: none; }
+  .nav__burger { display: block; }
+  .nav__inner { height: 72px; }
 }

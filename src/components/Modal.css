@@ -101,7 +101,20 @@
 }
 
 @media (max-width: 600px) {
+  .modal {
+    padding: 16px 12px;
+  }
+  .modal__panel {
+    max-height: 92vh;
+    border-radius: 14px;
+  }
   .modal__scroll {
-    padding: 44px 28px 36px;
+    padding: 40px 22px 32px;
+  }
+  .modal__close {
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
   }
 }

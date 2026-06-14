@@ -182,3 +182,42 @@ button {
   mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 100%);
   pointer-events: none;
 }
+
+/* ============================================================
+   响应式 —— 平板 / 手机
+   ============================================================ */
+
+/* 平板 */
+@media (max-width: 980px) {
+  :root {
+    --gutter: 40px;
+  }
+  .section {
+    padding-block: 110px;
+  }
+  .section-label {
+    margin-bottom: 40px;
+  }
+}
+
+/* 手机 */
+@media (max-width: 600px) {
+  :root {
+    --gutter: 22px;
+  }
+  .section {
+    padding-block: 84px;
+  }
+  .section-label {
+    font-size: 12px;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .section-label::before {
+    width: 24px;
+  }
+  /* 移动端关闭滚动入场位移，避免初次进入空白感 */
+  .reveal {
+    transform: translateY(22px);
+  }
+}

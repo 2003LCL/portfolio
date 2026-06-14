@@ -150,7 +150,13 @@ a.footer__link:hover .footer__link-value {
 
 @media (max-width: 640px) {
   .footer__contacts {
-    gap: 18px;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 44px;
+  }
+  .footer__link {
+    align-items: center;
+    text-align: center;
   }
   .footer__divider {
     display: none;
