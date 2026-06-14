@@ -38,7 +38,7 @@ export default function AboutSection() {
             <div className="about__contact reveal">
               <ContactItem label="求职意向" value={PROFILE.intent} />
               <ContactItem label="所在地" value={PROFILE.location} />
-              <ContactItem label="邮箱" value={PROFILE.email} href={`mailto:${PROFILE.email}`} />
+              <ContactItem label="邮箱" value={PROFILE.email} href={PROFILE.emailUrl} external />
               <ContactItem label="电话" value={PROFILE.phone} href={`tel:${PROFILE.phone.replace(/-/g, '')}`} />
             </div>
           </div>
@@ -106,7 +106,7 @@ function DetailContent({ data, type }) {
   )
 }
 
-function ContactItem({ label, value, href }) {
+function ContactItem({ label, value, href, external }) {
   const inner = (
     <>
       <span className="about__contact-label">{label}</span>
@@ -114,7 +114,11 @@ function ContactItem({ label, value, href }) {
     </>
   )
   return href ? (
-    <a className="about__contact-item about__contact-item--link" href={href}>
+    <a
+      className="about__contact-item about__contact-item--link"
+      href={href}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
       {inner}
     </a>
   ) : (

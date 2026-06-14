@@ -4,14 +4,39 @@
   left: 0;
   right: 0;
   z-index: 100;
-  transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
-  border-bottom: 1px solid transparent;
+  background: rgba(10, 9, 8, 0.28);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  transition: background 0.4s var(--ease), backdrop-filter 0.4s var(--ease);
+  border-bottom: 1px solid var(--line);
+  --nav-mx: 50%;
 }
 .nav--scrolled {
   background: rgba(8, 9, 11, 0.72);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border-bottom-color: var(--line);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+/* 跟随光标的底部发光边 */
+.nav__edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  pointer-events: none;
+  background: radial-gradient(
+    240px 100% at var(--nav-mx) 50%,
+    rgba(var(--accent-rgb), 0.95),
+    rgba(var(--accent-rgb), 0.3) 40%,
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.4);
+}
+.nav:hover .nav__edge {
+  opacity: 1;
 }
 
 .nav__inner {

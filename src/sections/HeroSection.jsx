@@ -66,9 +66,9 @@ export default function HeroSection() {
             查看项目
             <span className="btn-primary__arrow">→</span>
           </button>
-          <a href={`mailto:${PROFILE.email}`} className="btn-ghost">
+          <button className="btn-ghost" onClick={() => scrollTo('contact')}>
             联系我
-          </a>
+          </button>
         </div>
       </div>
 

@@ -25,7 +25,7 @@ export default function FooterSection() {
             正在寻找 AI / 机器人 / To B 方向的产品经理机会，欢迎随时联系。
           </p>
 
-          <a href={`mailto:${PROFILE.email}`} className="footer__cta reveal">
+          <a href={PROFILE.emailUrl} target="_blank" rel="noopener noreferrer" className="footer__cta reveal">
             <span>{PROFILE.email}</span>
             <span className="footer__cta-arrow">→</span>
           </a>

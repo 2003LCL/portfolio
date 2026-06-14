@@ -43,8 +43,16 @@ export default function Navigation() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const handleMove = (e) => {
+    e.currentTarget.style.setProperty('--nav-mx', `${e.clientX}px`)
+  }
+
   return (
-    <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${menuOpen ? 'nav--menu-open' : ''}`}>
+    <header
+      className={`nav ${scrolled ? 'nav--scrolled' : ''} ${menuOpen ? 'nav--menu-open' : ''}`}
+      onMouseMove={handleMove}
+    >
+      <span className="nav__edge" />
       <div className="nav__inner container">
         <a href="#hero" className="nav__logo" onClick={(e) => handleClick(e, 'hero')}>
           <span className="nav__logo-mark">李</span>
@@ -64,7 +72,7 @@ export default function Navigation() {
           ))}
         </nav>
 
-        <a href={`mailto:${PROFILE.email}`} className="nav__cta">
+        <a href="#contact" className="nav__cta" onClick={(e) => handleClick(e, 'contact')}>
           <span className="nav__cta-dot" />
           联系我
         </a>
@@ -98,7 +106,7 @@ export default function Navigation() {
             </a>
           ))}
         </nav>
-        <a href={`mailto:${PROFILE.email}`} className="nav__mobile-cta" onClick={() => setMenuOpen(false)}>
+        <a href={PROFILE.emailUrl} target="_blank" rel="noopener noreferrer" className="nav__mobile-cta" onClick={() => setMenuOpen(false)}>
           {PROFILE.email}
         </a>
       </div>

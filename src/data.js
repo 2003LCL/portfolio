@@ -5,6 +5,9 @@ export const PROFILE = {
   title: 'AI 设计师 / AI 产品经理',
   location: '浙江 · 杭州',
   email: 'chaoli_li@outlook.com',
+  // Outlook 网页版写信链接（任何人点击都能在新标签打开撰写页，无需本地邮件客户端）
+  emailUrl:
+    'https://outlook.live.com/mail/0/deeplink/compose?to=chaoli_li@outlook.com&subject=%E6%9D%A5%E8%87%AA%E4%BD%9C%E5%93%81%E9%9B%86%E7%9A%84%E8%81%94%E7%B3%BB',
   phone: '180-8712-2492',
   github: 'https://github.com/2003LCL',
   githubLabel: 'github.com/2003LCL',
