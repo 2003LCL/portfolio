@@ -39,15 +39,25 @@ export default function WorksSection() {
 }
 
 function ProjectCard({ project, featured, onOpen }) {
+  // 鼠标移动时把光标相对卡片的坐标写入 CSS 变量，驱动边缘光
+  const handleMove = (e) => {
+    const el = e.currentTarget
+    const rect = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`)
+  }
+
   return (
     <article
       className={`pcard reveal ${featured ? 'pcard--featured' : ''}`}
       data-id={project.id}
       onClick={onOpen}
+      onMouseMove={handleMove}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onOpen())}
     >
+      <span className="pcard__border" />
       <div className="pcard__visual">
         <div className={`pcard__art pcard__art--${project.id}`} />
         <div className="pcard__svg-wrap">
