@@ -1,0 +1,184 @@
+/* ============================================================
+   设计系统 — Design Tokens
+   暗色系 · 高级 · 克制 · 科技感
+   ============================================================ */
+
+:root {
+  /* —— 背景层次：近黑，带极暖中性调 —— */
+  --bg-0: #0a0908;          /* 最底层 */
+  --bg-1: #0d0c0a;          /* 区块背景 */
+  --bg-2: #131210;          /* 卡片背景 */
+  --bg-3: #1a1815;          /* 卡片 hover / 高一层 */
+
+  /* —— 文字 —— */
+  --text-0: #f3f1ec;        /* 主标题 */
+  --text-1: #c8c4bb;        /* 正文 */
+  --text-2: #8c877c;        /* 次要 */
+  --text-3: #5d584e;        /* 弱 / 标签 */
+
+  /* —— 描边 —— */
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+
+  /* —— 强调色：克制的香槟金 —— */
+  --accent: #c9b78d;
+  --accent-rgb: 201, 183, 141;
+  --accent-dim: rgba(201, 183, 141, 0.12);
+  --accent-glow: rgba(201, 183, 141, 0.30);
+
+  /* —— 字体 —— */
+  --font-display: 'Manrope', 'Noto Sans SC', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'Manrope', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* —— 版心 —— */
+  --container: 1700px;
+  --gutter: 60px;
+
+  /* —— 节奏 —— */
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg-0);
+  color: var(--text-1);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent-glow);
+  color: var(--bg-0);
+}
+
+/* —— 滚动条 —— */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-0);
+}
+::-webkit-scrollbar-thumb {
+  background: #20242d;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2c313c;
+}
+
+/* ============================================================
+   布局工具
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: 160px;
+}
+
+/* —— 区块标签：细线 + mono 文本 —— */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 56px;
+}
+.section-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--line-strong);
+}
+.section-label .idx {
+  color: var(--accent);
+}
+
+/* ============================================================
+   滚动入场动画（IntersectionObserver 驱动）
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(38px);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* —— 噪点 / 网格底纹，弱化模板感 —— */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 100%);
+  pointer-events: none;
+}

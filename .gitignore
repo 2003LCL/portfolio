@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vite
+
+# 私有 / 本地文件，不进公开仓库
+.claude/
+*.docx

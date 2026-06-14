@@ -1,0 +1,235 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* —— 背景 —— */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* 提升为独立合成层，滚动时不重绘 */
+  will-change: transform;
+  transform: translateZ(0);
+  contain: paint;
+}
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+/* 程序化背景：缓慢流动的冷色光晕 */
+.hero__bg-fx {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(40% 50% at 22% 30%, rgba(201, 183, 141, 0.16), transparent 60%),
+    radial-gradient(38% 48% at 78% 65%, rgba(176, 142, 94, 0.13), transparent 60%),
+    radial-gradient(45% 55% at 60% 20%, rgba(150, 120, 80, 0.10), transparent 60%);
+  filter: blur(16px);
+  animation: drift 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-3%, 2%, 0) scale(1.06); }
+  100% { transform: translate3d(3%, -2%, 0) scale(1.02); }
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, #000 20%, transparent 85%);
+}
+
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, transparent 50%, var(--bg-0) 96%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, transparent 40%, rgba(8, 9, 11, 0.55) 100%);
+}
+
+/* —— 内容 —— */
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 38px;
+  opacity: 0;
+  animation: fade-up 1s var(--ease-out) 0.2s forwards;
+}
+.hero__eyebrow-line {
+  width: 56px;
+  height: 1px;
+  background: var(--accent);
+}
+.hero__eyebrow-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.hero__eyebrow-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 8vw, 132px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--text-0);
+  margin-bottom: 40px;
+}
+.hero__line {
+  display: block;
+}
+.hero__word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.hero__word.is-in {
+  opacity: 1;
+  transform: none;
+}
+.hero__word--accent {
+  color: var(--accent);
+}
+
+.hero__subtitle {
+  max-width: 620px;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-2);
+  margin-bottom: 52px;
+  opacity: 0;
+  animation: fade-up 1s var(--ease-out) 1.3s forwards;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  opacity: 0;
+  animation: fade-up 1s var(--ease-out) 1.5s forwards;
+}
+
+/* —— 按钮 —— */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  color: var(--bg-0);
+  background: var(--text-0);
+  padding: 16px 30px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: transform 0.4s var(--ease), background 0.3s var(--ease), box-shadow 0.4s var(--ease);
+}
+.btn-primary:hover {
+  background: var(--accent);
+  box-shadow: 0 8px 40px var(--accent-glow);
+  transform: translateY(-2px);
+}
+.btn-primary__arrow {
+  transition: transform 0.4s var(--ease);
+}
+.btn-primary:hover .btn-primary__arrow {
+  transform: translateX(5px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  color: var(--text-1);
+  padding: 16px 30px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  transition: border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.btn-ghost:hover {
+  border-color: var(--text-1);
+  color: var(--text-0);
+}
+
+/* —— 滚动指示器 —— */
+.hero__scroll {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: fade-up 1s var(--ease-out) 1.9s forwards;
+}
+.hero__scroll-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--text-3);
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  position: relative;
+  overflow: hidden;
+}
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: var(--accent);
+  animation: scroll-dot 2s var(--ease) infinite;
+}
+@keyframes scroll-dot {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(250%); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
