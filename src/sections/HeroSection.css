@@ -23,22 +23,55 @@
   opacity: 0.5;
 }
 
-/* 程序化背景：缓慢流动的冷色光晕 */
+/* 程序化背景：柔和径向光晕（渐变本身就柔，不用 blur 滤镜，零栅格化开销） */
 .hero__bg-fx {
   position: absolute;
-  inset: -20%;
+  inset: 0;
   background:
     radial-gradient(40% 50% at 22% 30%, rgba(201, 183, 141, 0.16), transparent 60%),
     radial-gradient(38% 48% at 78% 65%, rgba(176, 142, 94, 0.13), transparent 60%),
     radial-gradient(45% 55% at 60% 20%, rgba(150, 120, 80, 0.10), transparent 60%);
-  filter: blur(16px);
-  animation: drift 22s ease-in-out infinite alternate;
+}
+
+/* 漂浮光晕 —— 仅 transform 动画（GPU 合成，便宜），不用 blur 滤镜 */
+.hero__aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.55;
   will-change: transform;
 }
-@keyframes drift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(-3%, 2%, 0) scale(1.06); }
-  100% { transform: translate3d(3%, -2%, 0) scale(1.02); }
+.hero__orb--1 {
+  width: 60vw;
+  height: 60vw;
+  top: -18%;
+  left: -12%;
+  background: radial-gradient(circle, rgba(201, 183, 141, 0.22), transparent 60%);
+  animation: hero-orb-1 28s ease-in-out infinite;
+}
+.hero__orb--2 {
+  width: 50vw;
+  height: 50vw;
+  bottom: -20%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(150, 170, 210, 0.16), transparent 60%);
+  animation: hero-orb-2 34s ease-in-out infinite;
+}
+@keyframes hero-orb-1 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(5vw, 3vw, 0); }
+}
+@keyframes hero-orb-2 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-4vw, -3vw, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__orb { animation: none; }
 }
 
 .hero__particles {
@@ -46,6 +79,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .hero__bg-grid {

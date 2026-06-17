@@ -55,7 +55,7 @@ export default function Navigation() {
       <span className="nav__edge" />
       <div className="nav__inner container">
         <a href="#hero" className="nav__logo" onClick={(e) => handleClick(e, 'hero')}>
-          <span className="nav__logo-mark">李</span>
+          <span className="nav__logo-mark">{PROFILE.name.trim()[0]}</span>
           <span className="nav__logo-text">{PROFILE.name}</span>
         </a>
 

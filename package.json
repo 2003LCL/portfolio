@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:service": "cross-env SITE=service vite",
     "build": "vite build",
+    "build:service": "cross-env SITE=service vite build",
     "preview": "vite preview"
   },
   "dependencies": {

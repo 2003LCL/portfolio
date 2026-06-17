@@ -26,8 +26,10 @@ export function useReveal(options = {}) {
 
     if (options.stagger) {
       const items = el.querySelectorAll('.reveal')
+      const step = options.step ?? 0.08
+      const cap = options.cap ?? 6 // 延迟封顶，避免长页面底部元素等太久
       items.forEach((item, i) => {
-        item.style.setProperty('--reveal-delay', `${i * (options.step ?? 0.08)}s`)
+        item.style.setProperty('--reveal-delay', `${Math.min(i, cap) * step}s`)
         observer.observe(item)
       })
     } else {

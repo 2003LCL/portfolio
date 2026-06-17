@@ -8,3 +8,9 @@ dist-ssr
 # 私有 / 本地文件，不进公开仓库
 .claude/
 *.docx
+dist-service
+
+# 大文件 / 私有素材，不进公开仓库
+*.mp4
+*.png
+简历*.md

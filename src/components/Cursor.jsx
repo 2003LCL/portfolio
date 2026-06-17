@@ -2,15 +2,20 @@ import { useEffect, useRef } from 'react'
 import './Cursor.css'
 
 /**
- * 金色圆点光标 —— 一个即时跟随的实心点 + 一个带阻尼跟随的光环。
- * 悬停在可点击元素上时光环放大。仅在支持精确指针（鼠标）的设备启用。
+ * 自定义光标。支持多种变体：
+ *  - 'dot'       金色实心点 + 阻尼光环（主站 / 接单页默认）
+ *  - 'crosshair' 取景框十字准星（摄影案例）
+ *  - 'ring'      描边圆环（个人站案例）
+ *  - 'none'      不启用自定义光标，使用系统默认箭头
+ * 可通过 accent / accentRgb 覆盖颜色，默认用全局主题色。
+ * 仅在支持精确指针（鼠标）的设备启用。
  */
-export default function Cursor() {
+export default function Cursor({ variant = 'dot', accent, accentRgb }) {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
 
   useEffect(() => {
-    // 触屏 / 无鼠标设备不启用
+    if (variant === 'none') return
     if (!window.matchMedia('(pointer: fine)').matches) return
 
     const dot = dotRef.current
@@ -27,7 +32,6 @@ export default function Cursor() {
     const onMove = (e) => {
       mx = e.clientX
       my = e.clientY
-      // 实心点即时跟随
       dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`
       if (!visible) {
         visible = true
@@ -36,7 +40,6 @@ export default function Cursor() {
       }
     }
 
-    // 光环带阻尼平滑跟随
     const tick = () => {
       rx += (mx - rx) * 0.18
       ry += (my - ry) * 0.18
@@ -45,7 +48,6 @@ export default function Cursor() {
     }
     raf = requestAnimationFrame(tick)
 
-    // 悬停可点击元素时放大光环
     const onOver = (e) => {
       if (e.target.closest('a, button, [role="button"], input, textarea, select, label')) {
         ring.classList.add('is-active')
@@ -82,12 +84,18 @@ export default function Cursor() {
       document.removeEventListener('mouseleave', onLeave)
       document.body.classList.remove('has-custom-cursor')
     }
-  }, [])
+  }, [variant])
+
+  if (variant === 'none') return null
+
+  // 颜色覆盖：传了就用案例色，否则用全局主题色
+  const styleVars =
+    accent && accentRgb ? { '--cur': accent, '--cur-rgb': accentRgb } : undefined
 
   return (
-    <>
+    <div className={`cursor cursor--${variant}`} style={styleVars}>
       <div className="cursor-dot" ref={dotRef} aria-hidden="true" />
       <div className="cursor-ring" ref={ringRef} aria-hidden="true" />
-    </>
+    </div>
   )
 }
